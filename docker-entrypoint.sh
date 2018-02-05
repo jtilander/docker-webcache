@@ -1,5 +1,9 @@
 #!/bin/sh
-set -xe
+set -e
+
+export VERSION=$(cat /version.txt)
+
+echo "Now running jtilander/webcache $VERSION"
 
 export LISTENPORT=${LISTENPORT:-8888}
 export UPSTREAM=${UPSTREAM:-http://remote}

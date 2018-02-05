@@ -15,3 +15,6 @@ VOLUME ["/cache"]
 
 ENTRYPOINT ["/sbin/tini", "-g", "--", "/docker-entrypoint.sh"]
 CMD ["cache"]
+
+ARG VERSION=unknown
+RUN echo "$VERSION" > /version.txt

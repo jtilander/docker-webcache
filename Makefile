@@ -2,8 +2,10 @@ ifeq ($(OS),Windows_NT)
 	detected_OS := Windows
 	export PWD?=$(shell echo %CD%)
 	export SHELL=cmd
+	export VERSION=unknown
 else
 	detected_OS := $(shell uname -s)
+	export VERSION=$(shell git describe --tags --dirty 2>/dev/null || echo unknown)
 endif
 
 export IMAGENAME=jtilander/webcache
@@ -19,7 +21,7 @@ BUILDOPTS?=
 .PHONY: image run clean
 
 image:
-	docker build $(BUILDOPTS) -t $(IMAGENAME):$(TAG) .
+	docker build --build-arg VERSION=$(VERSION) $(BUILDOPTS) -t $(IMAGENAME):$(TAG) .
 	docker images $(IMAGENAME):$(TAG)
 
 run:
