@@ -16,7 +16,14 @@ export CACHE_SIZE=${CACHE_SIZE:-1G}
 export CACHE_MEM=${CACHE_MEM:-10m}
 export CACHE_AGE=${CACHE_AGE:-365d}
 
-envsubst '${LISTENPORT} ${UPSTREAM} ${WORKERS} ${MAX_EVENTS} ${SENDFILE} ${TCP_NOPUSH} ${CACHE_SIZE} ${CACHE_AGE} ${CACHE_MEM}' > /etc/nginx/nginx.conf < /etc/nginx/nginx.conf.tmpl
+export USE_PERFLOG=${USE_PERFLOG:0}
+
+if [ "$USE_PERFLOG" = "1" ]; then
+	export ACCESS_LOG_STATEMENT='access_log  /log/access.log upstream_time;'
+fi
+
+
+envsubst '${LISTENPORT} ${UPSTREAM} ${WORKERS} ${MAX_EVENTS} ${SENDFILE} ${TCP_NOPUSH} ${CACHE_SIZE} ${CACHE_AGE} ${CACHE_MEM} ${ACCESS_LOG_STATEMENT}' > /etc/nginx/nginx.conf < /etc/nginx/nginx.conf.tmpl
 
 if [ "$1" = "cache" ]; then
 	shift

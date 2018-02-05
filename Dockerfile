@@ -11,7 +11,10 @@ RUN apk add --no-cache \
 COPY docker-entrypoint.sh /
 COPY nginx.conf /etc/nginx/nginx.conf.tmpl
 
-VOLUME ["/cache"]
+
+RUN mkdir -p /cache /log
+
+VOLUME ["/cache", "/log"]
 
 ENTRYPOINT ["/sbin/tini", "-g", "--", "/docker-entrypoint.sh"]
 CMD ["cache"]

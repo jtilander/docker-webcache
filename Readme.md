@@ -21,5 +21,6 @@ A simple frontend for caching requests to an upstream source.
 |CACHE_SIZE|1G|Size of cache on disk|
 |CACHE_MEM|10m|Ram size for cache keys|
 |CACHE_AGE|365d|When should we auto retire entries?|
+|USE_PERFLOG|0|Also logs to /log/access.log if set to 1, useful for [exporting](https://www.martin-helmich.de/en/blog/monitoring-nginx.html)|
 
 
