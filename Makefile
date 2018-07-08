@@ -18,6 +18,7 @@ WORKERS?=8
 MAX_EVENTS?=1024
 BUILDOPTS?=
 USE_PERFLOG?=0
+SSL?=off
 
 .PHONY: image run clean
 
@@ -34,6 +35,7 @@ run:
 		-e WORKERS=$(WORKERS) \
 		-e MAX_EVENTS=$(MAX_EVENTS) \
 		-e USE_PERFLOG=$(USE_PERFLOG) \
+		-e SSL=$(SSL) \
 		-v $(PWD)/tmp/cache:/cache \
 		-v $(PWD)/tmp/logs:/log \
 		-p $(LISTENPORT):$(LISTENPORT) \

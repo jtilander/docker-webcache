@@ -1,4 +1,4 @@
-FROM nginx:1.13.8-alpine
+FROM nginx:1.15.1-alpine
 
 RUN apk add --no-cache \
 		curl \
@@ -11,10 +11,10 @@ RUN apk add --no-cache \
 COPY docker-entrypoint.sh /
 COPY nginx.conf /etc/nginx/nginx.conf.tmpl
 
+RUN mkdir -p /cache /log /etc/certs.d
+COPY bad.* /etc/certs.d/
 
-RUN mkdir -p /cache /log
-
-VOLUME ["/cache", "/log"]
+VOLUME ["/cache", "/log", "/etc/certs.d"]
 
 ENTRYPOINT ["/sbin/tini", "-g", "--", "/docker-entrypoint.sh"]
 CMD ["cache"]
